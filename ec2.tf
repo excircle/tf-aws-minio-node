@@ -48,9 +48,12 @@ resource "aws_instance" "minio_host" {
   # User data script to bootstrap MinIO
   user_data = base64encode(templatefile("${path.module}/setup.sh", {
         hosts               = join(" ", local.host_names)
+        host_count          = length(local.host_names)
+        disk_count          = var.num_disks
         node_name           = "${each.key}"
         package_manager     = var.package_manager
         system_user         = var.system_user
+        minio_user          = var.minio_user
   } ))
 
   tags = merge(

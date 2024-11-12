@@ -118,6 +118,12 @@ variable "package_manager" {
   type        = string
 }
 
+variable "minio_user" {
+  description = "User to create and apply in systemd service file"
+  type        = string
+  default     = "minio"
+}
+
 variable "system_user" {
   description = "System user for Linux provisioning"
   type        = string
