@@ -113,6 +113,12 @@ variable "bastion_host" {
   default = false
 }
 
+variable "bastion_security_group_name" {
+  description = "Bastion Security Group Name"
+  type = string
+  default = "bastion-sg"
+}
+
 variable "package_manager" {
   description = "Package manager for provisioning"
   type        = string

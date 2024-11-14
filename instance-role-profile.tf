@@ -1,6 +1,6 @@
 # Assume Role
 resource "aws_iam_role" "ec2_cli_role" {
-  name = var.aws_iam_role_name
+  name = format("%s_%s", replace(var.application_name, "-", "_"), var.aws_iam_role_name)
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -26,7 +26,7 @@ resource "aws_iam_role" "ec2_cli_role" {
 
 # Grants policy holder auth to use AWS CLI
 resource "aws_iam_policy" "describe_instances" {
-  name        = var.aws_iam_policy_name
+  name = format("%s_%s", replace(var.application_name, "-", "_"), var.aws_iam_policy_name)
   description = "Allow EC2 instances to access Secrets Manager and write secrets to the file system"
 
   policy = jsonencode({
@@ -76,7 +76,7 @@ resource "aws_iam_role_policy_attachment" "ec2_describe_instances" {
 # Bind 'ec2_cli_role' to 'ec2_instance_profile'
 # Profile will be bound to EC2 during instance declaration
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = var.ec2_instance_profile_name
+  name = format("%s_%s", replace(var.application_name, "-", "_"), var.ec2_instance_profile_name)
   role = aws_iam_role.ec2_cli_role.name
   tags = merge(
     local.tag,

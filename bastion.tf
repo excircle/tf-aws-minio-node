@@ -1,12 +1,12 @@
 
 resource "aws_instance" "bastion_host" {
-  count = var.bastion_host ? 1 : 0
+  for_each = var.bastion_host == true ? toset(["bastion"]) : toset([])
 
   ami                         = var.ec2_ami_image
   instance_type               = var.ec2_instance_type
   key_name                    = aws_key_pair.access_key.key_name
   associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
+  vpc_security_group_ids      = [aws_security_group.bastion_sg[0].id]
   subnet_id                   = var.subnets.public[0]
   iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name # Attach Profile To allow AWS CLI commands
 
