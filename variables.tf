@@ -42,6 +42,12 @@ variable "ec2_instance_type" {
   type = string
 }
 
+variable "ec2_instance_type_bastion" {
+  description = "AWS EC2 Instance Type"
+  type = string
+  default = "t2.micro"
+}
+
 variable "make_private" {
   description = "Make the cluster private"
   type = bool
@@ -100,7 +106,6 @@ variable "subnets" {
   })
 }
 
-
 variable "aws_security_group_name" {
   description = "AWS Security Group Name"
   type = string
@@ -116,7 +121,7 @@ variable "bastion_host" {
 variable "bastion_security_group_name" {
   description = "Bastion Security Group Name"
   type = string
-  default = "bastion-sg"
+  default = "bastion_sg"
 }
 
 variable "package_manager" {
